@@ -118,6 +118,8 @@ function Layout({ children }: { children: React.ReactNode }) {
     <div className="app">
       <header className="app__header">
         <div className="container">
+          <h1>Skeivtkulturår Kalender</h1>
+          <p>Delta, engasjer deg og bli med på feiringen</p>
           <nav aria-label="Main navigation" className="app__header-nav">
             <ul>
               <li>

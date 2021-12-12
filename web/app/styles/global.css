@@ -9,15 +9,22 @@
   --color-links-hover: var(--color-blue);
 
   --color-purple: #3a1b7b;
+  --color-medium-purple: #C5B6D5;
   --color-light-purple: #ebe7f1;
   --color-blue: #184fbd;
   --color-grey: #656781;
+  --color-base-grey: #ECEEF4;
+  --color-light-grey: #F7F8FA;
   --font-body: proxima-nova, -apple-system, 'Segoe UI', Helvetica Neue, Helvetica, Roboto, Arial, sans-serif, system-ui,
     'Apple Color Emoji', 'Segoe UI Emoji';
 }
 
 html {
   box-sizing: border-box;
+}
+
+h1, h2, h3 {
+  margin: 0;
 }
 
 *,
@@ -108,7 +115,16 @@ button:focus {
   width: 100%;
 }
 
-.app__header-nav {
+.app__header {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-light-purple);
+}
+
+.app__header h1, .app__header p {
+  text-align: center;
 }
 
 .app__header-nav ul {
@@ -117,5 +133,6 @@ button:focus {
 }
 
 .app__main {
+  margin-top: 20px;
   flex: 1 1 100%;
 }

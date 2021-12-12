@@ -32,6 +32,7 @@ export let action: ActionFunction = async ({ request }) => {
 export default function SubmitEvent() {
   // https://remix.run/api/remix#useactiondata
   let actionMessage = useActionData<string>();
+	const [ageLimit, setAgelimit] = useState(false);
 
   // const [imageFile, setImageFile] = useState<File | null>(null);
   // const onDrop = useCallback((acceptedFiles) => {
@@ -114,15 +115,18 @@ export default function SubmitEvent() {
           <div>
             <div>
               <label htmlFor="age-limit">Aldersgrense</label>
-              <input name="age-limit" placeholder="Fullt navn" required />
+              <input name="age-limit" type="checkbox" checked={ageLimit} onChange={() => setAgelimit(prev => !prev)} /> Ja
             </div>
+						{ ageLimit &&
             <div>
-              <label htmlFor="age-limit-age">Spesifiser alder</label>
-              <input name="age-limit-age" placeholder="18" type="number" />
+              <label htmlFor="age-limit-age" aria-required={ageLimit}>Spesifiser alder</label>
+              <input name="age-limit-age" placeholder="18" type="number" required={ageLimit} />
             </div>
+						}
             <div>
               <label htmlFor="ticket-price">Billettpris</label>
-              <input name="ticket-price" placeholder="kr" />
+              <input name="ticket-price" placeholder="kr" /></div>
+							<div>
               <input name="ticket-free" type="checkbox" />
               <label htmlFor="ticket-free">Gratis</label>
             </div>
@@ -135,17 +139,22 @@ export default function SubmitEvent() {
               <textarea name="event-info" placeholder="Om arrangementet" />
             </div>
             <label htmlFor="image">Last opp bilde</label>
-						<div>
-            <div className="dropzone" {...getRootProps()}>
-              <input {...getInputProps({ name: 'image' })} />
+            <div>
+              <div className="dropzone" {...getRootProps()}>
+                <input {...getInputProps({ name: 'image' })} />
 
-              <p>Trykk eller drag 'n drop filer her...</p>
+                <p>Trykk eller drag 'n drop filer her...</p>
+              </div>
+              <div className="dropzone__info">
+                Krav for at bildet skal bli godkjent:
+                <ul>
+                  <li>Bildet må eies av arrangør</li>
+                  <li> Last opp filformat: .jpg, eller .png</li>
+                  <li> Max 5mb</li>
+                </ul>
+              </div>
             </div>
-            <small>
-              Krav for at bildet skal bli godkjent: Bildet må eies av arrangør Last opp filformat: .jpg, eller .png Max
-              5mb
-            </small>
-          </div></div>
+          </div>
         </fieldset>
         <fieldset>
           <h2>

@@ -3,16 +3,19 @@ import { useLoaderData, json, Link } from "remix";
 
 import eventStyles from "~/styles/event-list.css";
 
+import {
+  Event,
+  links as eventLinks
+} from "~/components/event";
+
+
 export let links: LinksFunction = () => {
   return [
+    ...eventLinks(),
     { rel: "stylesheet", href: eventStyles },
   ];
 };
 
-type IndexData = {
-  resources: Array<{ name: string; url: string }>;
-  demos: Array<{ name: string; to: string }>;
-};
 
 // Loaders provide data to components and are only ever called on the server, so
 // you can connect to a database or run any server side code you want right next
@@ -35,44 +38,21 @@ export let meta: MetaFunction = () => {
 
 // https://remix.run/guides/routing#index-routes
 export default function Index() {
-  let data = useLoaderData<IndexData>();
+  let data = useLoaderData<any>();
 
   return (
-    <div className="remix__page">
-      <main>
-        <h2>Welcome to Remix!</h2>
+      <main>   
         <ol className="event-list">
-					<li className="event-list__item">
-						<time className="event-list__item_date">
-							21<span>nov</span>
-						</time>
-						<img className="event-list__item_img"
-							src="https://via.placeholder.com/650x950"
-							alt={`Event ${""}`}
-						/>
-						<div className="event-list__item_content">
-							<time>time</time>
-							<h2>Event name</h2>
-							<p>
-								Arrangør -{" "}
-								<a href="/" target="_blank">
-									Google maps link
-								</a>
-							</p>
-							<a href="/" className="facebook">
-								Facebook link
-							</a>
-							<Link to="/">Event link</Link>
-							<ul className="event-list__item-tag_list">
-								<li className="event-list__item-tag_list__item">Tag</li>
-								<li className="event-list__item-tag_list__item">Tag</li>
-                <li className="event-list__item-tag_list__item">Tag</li>
-                <li className="event-list__item-tag_list__item">Tag</li>
-							</ul>
-						</div>
+					<li>
+						<Event date="" address="" eventLink="" eventName="" organizer="" tags={[]} facebookLink="" imgUrl="" />
 					</li>
 				</ol>
+
+        <section className="event__footer">
+          <h2>Legg til arrangement i kalenderen</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Non amet ac velit velit eget. Risus est, risus ac vitae eu. Amet, morbi semper eu, amet sed sit in. Maecenas imperdiet enim dignissim amet fermentum, velit at.</p>
+        <Link to="/submit">Meld inn arrangement</Link>
+        </section>
       </main>
-    </div>
   );
 }
