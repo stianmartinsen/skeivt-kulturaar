@@ -1,15 +1,10 @@
 {
   "private": true,
-  "name": "skeivt-kulturaar",
   "author": "Oslo Pride <teknologi@oslopride.no>",
   "license": "MPL-2.0",
+  "name": "skeivt-kulturaar",
   "workspaces": [
-    "web",
-    "sanity"
-  ],
-  "scripts": {
-    "sanity": "yarn workspace @skeivt-kulturaar/sanity",
-    "web": "yarn workspace @skeivt-kulturaar/web"
-  },
-  "devDependencies": {}
+    "sanity",
+    "web"
+  ]
 }
