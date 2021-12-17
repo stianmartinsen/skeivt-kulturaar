@@ -1,51 +1,31 @@
-import { useCallback, useRef, useState } from 'react';
-import type { ActionFunction, LinksFunction } from 'remix';
-import { Form, json, useActionData, redirect } from 'remix';
+import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
-import { Calendar } from '~/icons/calendar';
-import { Location } from '~/icons/location';
+import { Calendar } from '../components/icons/calendar';
+import { Location } from '../components/icons/location';
+import Layout from '../components/layout';
 
-import eventStyles from '~/styles/submit/form.css';
-
-export let links: LinksFunction = () => {
-  return [{ rel: 'stylesheet', href: eventStyles }];
-};
-
-export function meta() {
-  return { title: 'Submit event' };
-}
-
-// When your form sends a POST, the action is called on the server.
-// - https://remix.run/api/conventions#action
-// - https://remix.run/guides/data-updates
-export let action: ActionFunction = async ({ request }) => {
-  let formData = await request.formData();
-  console.log(formData);
-  // Finally, if the data is valid, you'll typically write to a database or send or
-  // email or log the user in, etc. It's recommended to redirect after a
-  // successful action, even if it's to the same place so that non-JavaScript workflows
-  // from the browser doesn't repost the data if the user clicks back.
-  return redirect('/thanks');
-};
+import styles from '../styles/form.module.css';
 
 export default function SubmitEvent() {
-  // https://remix.run/api/remix#useactiondata
-  let actionMessage = useActionData<string>();
-	const [ageLimit, setAgelimit] = useState(false);
+  const [ageLimit, setAgelimit] = useState(false);
 
-  // const [imageFile, setImageFile] = useState<File | null>(null);
-  // const onDrop = useCallback((acceptedFiles) => {
-  //   setImageFile(acceptedFiles[0]);
-  // }, []);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const onDrop = useCallback((acceptedFiles) => {
+    setImageFile(acceptedFiles[0]);
+  }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ maxSize: 5000000, accept: '.jpg,.png,.jpeg' });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    maxSize: 5000000,
+    accept: '.jpg,.png,.jpeg',
+  });
 
   return (
-    <main>
+    <Layout>
       <h1>Meld inn ditt arrangement</h1>
       <p>Kort informasjon om kalenderen her</p>
-      <Form method="post" className="form">
+      <form className={styles.form}>
         <fieldset>
           <h2>
             <figure>
@@ -115,18 +95,27 @@ export default function SubmitEvent() {
           <div>
             <div>
               <label htmlFor="age-limit">Aldersgrense</label>
-              <input name="age-limit" type="checkbox" checked={ageLimit} onChange={() => setAgelimit(prev => !prev)} /> Ja
+              <input
+                name="age-limit"
+                type="checkbox"
+                checked={ageLimit}
+                onChange={() => setAgelimit((prev) => !prev)}
+              />{' '}
+              Ja
             </div>
-						{ ageLimit &&
-            <div>
-              <label htmlFor="age-limit-age" aria-required={ageLimit}>Spesifiser alder</label>
-              <input name="age-limit-age" placeholder="18" type="number" required={ageLimit} />
-            </div>
-						}
+            {ageLimit && (
+              <div>
+                <label htmlFor="age-limit-age" aria-required={ageLimit}>
+                  Spesifiser alder
+                </label>
+                <input name="age-limit-age" placeholder="18" type="number" required={ageLimit} />
+              </div>
+            )}
             <div>
               <label htmlFor="ticket-price">Billettpris</label>
-              <input name="ticket-price" placeholder="kr" /></div>
-							<div>
+              <input name="ticket-price" placeholder="kr" />
+            </div>
+            <div>
               <input name="ticket-free" type="checkbox" />
               <label htmlFor="ticket-free">Gratis</label>
             </div>
@@ -140,12 +129,12 @@ export default function SubmitEvent() {
             </div>
             <label htmlFor="image">Last opp bilde</label>
             <div>
-              <div className="dropzone" {...getRootProps()}>
+              <div className={styles.dropzone} {...getRootProps()}>
                 <input {...getInputProps({ name: 'image' })} />
 
-                <p>Trykk eller drag 'n drop filer her...</p>
+                <p>Trykk eller drag &apos;n drop filer her...</p>
               </div>
-              <div className="dropzone__info">
+              <div className={styles.dropzone__info}>
                 Krav for at bildet skal bli godkjent:
                 <ul>
                   <li>Bildet må eies av arrangør</li>
@@ -166,7 +155,7 @@ export default function SubmitEvent() {
           <p>
             Ved spørsmål så trenger redaktør kontaktinformasjon til arrangement. Dette vil ikke bli synlig i kalenderen.
           </p>
-          <div className="layout">
+          <div className={styles.layout}>
             <div>
               <label htmlFor="contact-name" aria-required>
                 Fullt navn
@@ -187,16 +176,20 @@ export default function SubmitEvent() {
               <label htmlFor="contact-email">E-postaddresse</label>
               <input name="contact-email" placeholder="E-postaddresse" />
             </div>
-            <div className="grid-span">
+            <div className={styles.gridSpan}>
               <label htmlFor="contact-info">Informasjon til redaktør</label>
               <textarea name="contact-info" placeholder="Informasjon til redaktør" />
             </div>
           </div>
         </fieldset>
+        <fieldset>
+          <label htmlFor="agree">Jeg samtykker til at min persondata blir lagret</label>
+          <input type="checkbox" name="agree" />
+        </fieldset>
         <p>
           <button>Send inn arrangement</button>
         </p>
-      </Form>
-    </main>
+      </form>
+    </Layout>
   );
 }

@@ -1,7 +1,9 @@
+import Layout from "../components/layout";
+
 export default function SubmitEvent() {
   return (
-    <div>
+    <Layout>
       Appreciate ya
-    </div>
+    </Layout>
   )
 }

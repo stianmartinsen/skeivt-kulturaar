@@ -6,5 +6,9 @@
   "workspaces": [
     "sanity",
     "web"
-  ]
+  ],
+  "scripts": {
+    "sanity": "yarn workspace @skeivt-kulturaar/sanity",
+    "web": "yarn workspace @skeivt-kulturaar/web"
+  }
 }

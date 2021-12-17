@@ -6,7 +6,7 @@
   position: relative;
 }
 
-.event__date {
+.date {
   position: absolute;
   top: 16px;
   left: 16px;
@@ -24,27 +24,27 @@
   color: white;
 }
 
-.event__date span {
+.date span {
   font-size: 14px;
   line-height: 22px;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
 
-.event__img {
+.img {
   width: 400px;
   height: 265px;
   object-fit: cover;
 }
 
-.event__content {
+.content {
   display: flex;
   flex-direction: column;
   padding: 24px;
   background-color: var(--color-light-grey);
 }
 
-.event__content time {
+.content time {
   font-weight: bold;
   font-size: 14px;
   line-height: 18px;
@@ -53,7 +53,7 @@
   color: var(--color-grey);
 }
 
-.event__content h2 {
+.content h2 {
   font-weight: bold;
   font-size: 24px;
   line-height: 30px;
@@ -61,24 +61,24 @@
   margin: 4px 0 0;
 }
 
-.event__content p {
+.content p {
   font-size: 14px;
   line-height: 24px;
   margin: 4px 0 15px;
 }
 
-.event__content a:link,
-.event__content a:visited {
+.content a:link,
+.content a:visited {
   margin-right: auto;
 }
 
-.event__content a.facebook {
+.content a.facebook {
   font-weight: bold;
   font-size: 16px;
   line-height: 24px;
 }
 
-.event__tag-list {
+.tagList {
   display: flex;
   flex-wrap: wrap;
   margin: 16px 0 0;
@@ -86,7 +86,7 @@
   padding: 0;
 }
 
-.event__tag-list__item {
+.tagList__item {
   margin: 0;
   display: flex;
   align-items: center;

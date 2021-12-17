@@ -1,0 +1,40 @@
+.containerm, .main {
+  --gutter: 16px;
+  width: 1024px;
+  max-width: calc(100% - var(--gutter) * 2);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: calc(100vh - env(safe-area-inset-bottom));
+}
+
+.app > * {
+  width: 100%;
+}
+
+.header {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-light-purple);
+}
+
+.header h1, .header p {
+  text-align: center;
+}
+
+.headerNav ul {
+  display: flex;
+  gap: 30px;
+}
+
+.main {
+  margin-top: 20px;
+  flex: 1 1 100%;
+}
