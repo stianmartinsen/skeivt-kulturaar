@@ -15,7 +15,7 @@ export default function Layout({ children }: LayoutProps) {
       </Head>
       <header className={styles.header}>
         <div className={styles.container}>
-          <h1>Skeivtkulturår Kalender</h1>
+          <h1>Skeivt Kulturår Kalender</h1>
           <p>Delta, engasjer deg og bli med på feiringen</p>
           <nav aria-label="Main navigation" className={styles.headerNav}>
             <ul>

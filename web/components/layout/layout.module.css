@@ -23,6 +23,7 @@
   align-items: center;
   justify-content: center;
   background-color: var(--color-light-purple);
+  padding: 50px;
 }
 
 .header h1, .header p {
