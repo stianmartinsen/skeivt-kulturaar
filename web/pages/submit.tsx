@@ -10,13 +10,13 @@ import styles from '../styles/form.module.css';
 export default function SubmitEvent() {
   const [ageLimit, setAgelimit] = useState(false);
 
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const onDrop = useCallback((acceptedFiles) => {
-    setImageFile(acceptedFiles[0]);
-  }, []);
+  // const [imageFile, setImageFile] = useState<File | null>(null);
+  // const onDrop = useCallback((acceptedFiles) => {
+  //   setImageFile(acceptedFiles[0]);
+  // }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
+    // onDrop,
     maxSize: 5000000,
     accept: '.jpg,.png,.jpeg',
   });
@@ -25,7 +25,7 @@ export default function SubmitEvent() {
     <Layout>
       <h1>Meld inn ditt arrangement</h1>
       <p>Kort informasjon om kalenderen her</p>
-      <form className={styles.form}>
+      <form method="post" action="/api/submit" encType="multipart/form-data" className={styles.form}>
         <fieldset>
           <h2>
             <figure>
@@ -55,7 +55,7 @@ export default function SubmitEvent() {
             </figure>
             Dato og klokkeslett
           </h2>
-          <div className="layout">
+          <div className={styles.layout}>
             <div>
               <label htmlFor="start-date" aria-required="true">
                 Startdato
