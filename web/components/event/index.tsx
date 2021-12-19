@@ -28,11 +28,11 @@ export function Event({ date, eventLink, eventName, imgUrl, organizer, address, 
         <h3>Event name</h3>
         <p>
           Arrangør -{' '}
-          <a href="/" target="_blank">
+          <a href="https://google.com" target={`_gm_${eventName || 'blank'}`} rel="noreferrer">
             Google maps link
           </a>
         </p>
-        <a href="/" className={styles.facebook}>
+        <a href="https://facebook.com" className={styles.facebook} target={`_fb_${eventName || 'blank'}`} rel="noreferrer">
           Facebook link
         </a>
         <Link href="/">Event link</Link>
