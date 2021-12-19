@@ -4,9 +4,9 @@ import BlockContent from '@sanity/block-content-to-react';
 import sanity, { urlFor } from '../sanity'
 import Layout from "../components/layout";
 
-export default function About({ title, subTitle, aboutBody, aboutTitle }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function About({ image, title, subTitle, aboutBody, aboutTitle }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <Layout title={title} subTitle={subTitle}>
+    <Layout title={title} subTitle={subTitle} image={image}>
       <h2>{aboutTitle}</h2>
       <BlockContent blocks={aboutBody}/>
     </Layout>
@@ -26,7 +26,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     "about": *[_id in ["global_about", "drafts.global_about"]] | order(_updatedAt desc) [0],
   }`
   const res = await sanity.fetch(query)
-  const image = urlFor(res?.header?.background).auto('format').url().toString();
+  const image = urlFor(res?.configuration?.header?.background).auto('format').url().toString();
   console.log(JSON.stringify(res, null, 2))
 
   return {
