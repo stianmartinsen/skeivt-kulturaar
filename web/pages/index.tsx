@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import type { InferGetServerSidePropsType, GetServerSidePropsContext } from 'next'
+import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 import sanity, { urlFor } from '../sanity'
 
 import styles from "../styles/event-list.module.css";
@@ -10,9 +10,7 @@ import {
 import Layout from '../components/layout';
 
 
-export default function EventList({ image, title, subTitle }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log(image)
-
+export default function EventList({ image, title, subTitle }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout image={image} title={title} subTitle={subTitle}>
         <ol className={styles.eventList}>
@@ -35,7 +33,7 @@ export type Data = {
   title?: string | null;
   subTitle?: string | null;
 }
-export async function getServerSideProps(context: GetServerSidePropsContext) {
+export const getStaticProps: GetStaticProps = async (context) => {
   const data = await sanity.fetch(`*[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0]`)
   console.log(JSON.stringify(data, null, 2))
   const image = urlFor(data?.header?.background).auto('format').url().toString();
@@ -46,5 +44,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       title: data?.header?.title || null,
       subTitle: data?.header?.subtitle || null,
     },
+    revalidate: 3600
   }
 }
