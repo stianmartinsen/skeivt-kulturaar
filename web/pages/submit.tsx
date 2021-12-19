@@ -1,4 +1,4 @@
-import type { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
@@ -9,7 +9,7 @@ import sanity, { urlFor } from '../sanity';
 
 import styles from '../styles/form.module.css';
 
-export default function SubmitEvent({ image, title, subTitle }:InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [ageLimit, setAgelimit] = useState(false);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -195,9 +195,8 @@ export type Data = {
   title?: string | null;
   subTitle?: string | null;
 }
-export async function getServerSideProps(context: GetServerSidePropsContext) {
+export const getStaticProps: GetStaticProps = async (context) => {
   const res = await sanity.fetch(`*[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0]`)
-  console.log(JSON.stringify(res, null, 2))
   const image = urlFor(res?.header?.background).auto('format').url().toString();
   return {
     props: {
@@ -205,6 +204,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       title: res?.header?.title || null,
       subTitle: res?.header?.subtitle || null,
     },
+    revalidate: 3600
   }
 }
 

@@ -35,7 +35,6 @@ export type Data = {
 }
 export const getStaticProps: GetStaticProps = async (context) => {
   const data = await sanity.fetch(`*[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0]`)
-  console.log(JSON.stringify(data, null, 2))
   const image = urlFor(data?.header?.background).auto('format').url().toString();
 
   return {
