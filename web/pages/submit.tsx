@@ -1,28 +1,24 @@
-import { useCallback, useState } from 'react';
+import type { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 import { Calendar } from '../components/icons/calendar';
 import { Location } from '../components/icons/location';
 import Layout from '../components/layout';
+import sanity, { urlFor } from '../sanity';
 
 import styles from '../styles/form.module.css';
 
-export default function SubmitEvent() {
+export default function SubmitEvent({ image, title, subTitle }:InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [ageLimit, setAgelimit] = useState(false);
 
-  // const [imageFile, setImageFile] = useState<File | null>(null);
-  // const onDrop = useCallback((acceptedFiles) => {
-  //   setImageFile(acceptedFiles[0]);
-  // }, []);
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    // onDrop,
+  const { getRootProps, getInputProps } = useDropzone({
     maxSize: 5000000,
     accept: '.jpg,.png,.jpeg',
   });
 
   return (
-    <Layout>
+    <Layout image={image} title={title} subTitle={subTitle}>
       <h1>Meld inn ditt arrangement</h1>
       <p>Kort informasjon om kalenderen her</p>
       <form method="post" action="/api/submit" encType="multipart/form-data" className={styles.form}>
@@ -193,3 +189,22 @@ export default function SubmitEvent() {
     </Layout>
   );
 }
+
+export type Data = {
+  image?: string | null;
+  title?: string | null;
+  subTitle?: string | null;
+}
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const res = await sanity.fetch(`*[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0]`)
+  console.log(JSON.stringify(res, null, 2))
+  const image = urlFor(res?.header?.background).auto('format').url().toString();
+  return {
+    props: {
+      image: image || null,
+      title: res?.header?.title || null,
+      subTitle: res?.header?.subtitle || null,
+    },
+  }
+}
+

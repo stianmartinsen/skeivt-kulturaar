@@ -1,7 +1,9 @@
+import { forwardRef, HTMLAttributes } from 'react';
 import styles from './down-arrow.module.css';
 
-export const DownArrow = () => (
-  <button className={styles.container}>
+export type DownArrowProps = HTMLAttributes<HTMLButtonElement>;
+export const DownArrow = forwardRef<HTMLButtonElement, DownArrowProps>((props, ref) => (
+  <button className={styles.container} {...props} ref={ref}>
     <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         fillRule="evenodd"
@@ -11,4 +13,6 @@ export const DownArrow = () => (
       />
     </svg>
   </button>
-);
+));
+
+DownArrow.displayName = 'DownArrow'

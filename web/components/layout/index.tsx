@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ReactNode } from 'react';
+import { ReactNode, useRef } from 'react';
 
 import styles from './layout.module.css';
 import { DownArrow } from '../icons/down-arrrow';
@@ -13,6 +13,15 @@ export type LayoutProps = {
   subTitle?: string | null;
 };
 export default function Layout({ children, image, title, subTitle }: LayoutProps) {
+  const scrollButtonRef = useRef<HTMLButtonElement>(null);
+
+	function scrollToContent() {
+		const buttonDistanceFromTop = scrollButtonRef.current?.offsetTop as number;
+		const buttonHeight = scrollButtonRef.current?.offsetHeight as number;
+		const scrollOffsetFromTop = buttonDistanceFromTop + buttonHeight;
+
+		window.scrollTo({ top: scrollOffsetFromTop, behavior: "smooth" });
+	}
   return (
     <>
       <Head>
@@ -43,14 +52,9 @@ export default function Layout({ children, image, title, subTitle }: LayoutProps
             </ul>
           </nav>
         </div>
-        <DownArrow />
+        <DownArrow onClick={scrollToContent} ref={scrollButtonRef} />
       </header>
       <main className={styles.main}>{children}</main>
-      <footer className={styles.footer}>
-        <div className={styles.container}>
-          <p>Footer content</p>
-        </div>
-      </footer>
     </>
   );
 }

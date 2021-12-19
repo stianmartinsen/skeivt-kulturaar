@@ -1,9 +1,21 @@
-.containerm, .main {
+.container, .main {
   --gutter: 16px;
   width: 1024px;
   max-width: calc(100% - var(--gutter) * 2);
   margin-right: auto;
   margin-left: auto;
+}
+
+.container {
+  z-index: 1;
+}
+
+.container a:link, .container a:visited {
+  color: white;
+}
+
+.main {
+  margin-bottom: 80px;
 }
 
 .app {
@@ -47,14 +59,13 @@
 }
 
 .header h1, .header p {
-  position: relative;
-  z-index: 1;
   text-align: center;
   color: white;
 }
 
 .headerNav ul {
   display: flex;
+  justify-content: center;
   gap: 30px;
 }
 
