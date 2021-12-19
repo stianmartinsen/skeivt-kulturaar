@@ -5,8 +5,11 @@ import styles from './layout.module.css';
 
 export type LayoutProps = {
   children: ReactNode;
+  image?: string | null;
+  title?: string | null;
+  subTitle?: string | null;
 };
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children, image, title, subTitle }: LayoutProps) {
   return (
     <>
       <Head>
@@ -15,8 +18,8 @@ export default function Layout({ children }: LayoutProps) {
       </Head>
       <header className={styles.header}>
         <div className={styles.container}>
-          <h1>Skeivt Kulturår Kalender</h1>
-          <p>Delta, engasjer deg og bli med på feiringen</p>
+          <h1>{title}</h1>
+          <p>{subTitle}</p>
           <nav aria-label="Main navigation" className={styles.headerNav}>
             <ul>
               <li>

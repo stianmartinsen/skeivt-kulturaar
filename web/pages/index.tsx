@@ -1,4 +1,7 @@
 import Link from 'next/link'
+import type { InferGetServerSidePropsType, GetServerSidePropsContext } from 'next'
+import sanity from '../sanity'
+
 import styles from "../styles/event-list.module.css";
 
 import {
@@ -6,10 +9,12 @@ import {
 } from "../components/event";
 import Layout from '../components/layout';
 
-export default function EventList() {
+
+export default function EventList({ image, title, subTitle }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  console.log(image)
 
   return (
-    <Layout>
+    <Layout image={image} title={title} subTitle={subTitle}>
         <ol className={styles.eventList}>
 					<li>
 						<Event date="" address="" eventLink="" eventName="" organizer="" tags={[]} facebookLink="" imgUrl="" />
@@ -23,4 +28,22 @@ export default function EventList() {
         </section>
     </Layout>
   );
+}
+
+export type Data = {
+  image?: string | null;
+  title?: string | null;
+  subTitle?: string | null;
+}
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const res = await sanity.fetch(`*[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0]`)
+  console.log(JSON.stringify(res, null, 2))
+
+  return {
+    props: {
+      image: null,
+      title: res?.header?.title || null,
+      subTitle: res?.header?.subtitle || null,
+    },
+  }
 }

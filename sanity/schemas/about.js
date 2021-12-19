@@ -5,7 +5,7 @@ export default {
   icon: MdLink,
   name: 'about',
   type: 'document',
-  __experimental_actions: [/*'create',*/ 'update', /*'delete',*/ 'publish'],
+  __experimental_actions: ['create', 'update', /*'delete',*/ 'publish'],
   fields: [
     {
       name: 'title',
