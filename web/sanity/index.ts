@@ -19,7 +19,8 @@ const sanity = sanityClient({
 	projectId: PROJECT_ID,
 	dataset: DATASET,
 	useCdn: !previewMode,
-	withCredentials: previewMode
+	withCredentials: previewMode,
+  token: process.env.SANITY_ACCESS_TOKEN
 });
 
 const builder = imageUrlBuilder(sanity);
