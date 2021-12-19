@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import Image from 'next/image'
+import Link from 'next/link';
+import Image from 'next/image';
 import styles from './event.module.css';
 
 export type EventProps = {
@@ -11,14 +11,18 @@ export type EventProps = {
   eventLink: string;
   facebookLink?: string;
   tags: Array<string>;
-}
-export function Event({ date, eventLink, eventName, imgUrl, organizer, address, facebookLink, tags}: EventProps) {
+};
+export function Event({ date, eventLink, eventName, imgUrl, organizer, address, facebookLink, tags }: EventProps) {
   return (
     <div className={styles.event}>
+      <div className={styles.imgContainer}>
       <time className={styles.date}>
         21<span>nov</span>
       </time>
-      <Image className={styles.img} src="https://via.placeholder.com/650x950" alt={`Event ${''}`} layout='fill' />
+      {imgUrl && (
+          <Image className={styles.img} src={imgUrl} alt={`Event ${''}`} layout="fill" />
+          )}
+          </div>
       <div className={styles.content}>
         <time>time</time>
         <h3>Event name</h3>

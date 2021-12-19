@@ -1,7 +1,10 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ReactNode } from 'react';
+
 import styles from './layout.module.css';
+import { DownArrow } from '../icons/down-arrrow';
 
 export type LayoutProps = {
   children: ReactNode;
@@ -17,6 +20,12 @@ export default function Layout({ children, image, title, subTitle }: LayoutProps
         <meta name="viewport" content="width=device-width,initial-scale=1" />
       </Head>
       <header className={styles.header}>
+
+        {image && 
+        <div className={styles.imgContainer}>
+        <Image alt="" src={image} layout='fill' />
+        </div>
+        }
         <div className={styles.container}>
           <h1>{title}</h1>
           <p>{subTitle}</p>
@@ -34,6 +43,7 @@ export default function Layout({ children, image, title, subTitle }: LayoutProps
             </ul>
           </nav>
         </div>
+        <DownArrow />
       </header>
       <main className={styles.main}>{children}</main>
       <footer className={styles.footer}>

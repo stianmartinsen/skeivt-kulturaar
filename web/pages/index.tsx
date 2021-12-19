@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { InferGetServerSidePropsType, GetServerSidePropsContext } from 'next'
-import sanity from '../sanity'
+import sanity, { urlFor } from '../sanity'
 
 import styles from "../styles/event-list.module.css";
 
@@ -38,10 +38,10 @@ export type Data = {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const res = await sanity.fetch(`*[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0]`)
   console.log(JSON.stringify(res, null, 2))
-
+  const image = urlFor(res?.header?.background).auto('format').url().toString();
   return {
     props: {
-      image: null,
+      image: image || null,
       title: res?.header?.title || null,
       subTitle: res?.header?.subtitle || null,
     },

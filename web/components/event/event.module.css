@@ -67,6 +67,12 @@
   margin: 4px 0 15px;
 }
 
+.imgContainer {
+  position: relative;
+  width: 400px;
+  height: 265px;
+}
+
 .content a:link,
 .content a:visited {
   margin-right: auto;

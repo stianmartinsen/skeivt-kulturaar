@@ -18,7 +18,8 @@
 }
 
 .header {
-  min-height: 100px;
+  position: relative;
+  min-height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,8 +27,30 @@
   padding: 50px;
 }
 
+.imgContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.header img {
+  object-fit: cover !important;
+}
+
+.header h1 {
+  font-size: 56px;
+}
+
+.header p {
+  font-size: 24px;
+}
+
 .header h1, .header p {
+  position: relative;
+  z-index: 1;
   text-align: center;
+  color: white;
 }
 
 .headerNav ul {

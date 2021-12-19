@@ -2,7 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['via.placeholder.com'],
+    domains: ['via.placeholder.com', 'cdn.sanity.io'],
   },
   i18n: {
     // These are all the locales you want to support in
