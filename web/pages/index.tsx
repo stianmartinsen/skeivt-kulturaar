@@ -35,15 +35,11 @@ export type Data = {
   title?: string | null;
   subTitle?: string | null;
 }
-export async function getServerSideProps({ res }: GetServerSidePropsContext) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const data = await sanity.fetch(`*[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0]`)
   console.log(JSON.stringify(data, null, 2))
   const image = urlFor(data?.header?.background).auto('format').url().toString();
 
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=7200, stale-while-revalidate=3600'
-  )
   return {
     props: {
       image: image || null,
