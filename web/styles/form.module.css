@@ -31,7 +31,7 @@
   width: 40px;
   height: 40px;
   background-color: var(--color-purple);
-  color: white;
+  color: var(--color-foreground-light);
   justify-content: center;
   margin: 0 0.5em 0 0;
 }

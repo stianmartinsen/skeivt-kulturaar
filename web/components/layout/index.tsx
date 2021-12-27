@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { ReactNode, useRef } from 'react';
 
 import styles from './layout.module.css';
-import { DownArrow } from '../icons/down-arrrow';
 
 export type LayoutProps = {
   children: ReactNode;
@@ -15,13 +14,13 @@ export type LayoutProps = {
 export default function Layout({ children, image, title, subTitle }: LayoutProps) {
   const scrollButtonRef = useRef<HTMLButtonElement>(null);
 
-	function scrollToContent() {
-		const buttonDistanceFromTop = scrollButtonRef.current?.offsetTop as number;
-		const buttonHeight = scrollButtonRef.current?.offsetHeight as number;
-		const scrollOffsetFromTop = buttonDistanceFromTop + buttonHeight;
+  function scrollToContent() {
+    const buttonDistanceFromTop = scrollButtonRef.current?.offsetTop as number;
+    const buttonHeight = scrollButtonRef.current?.offsetHeight as number;
+    const scrollOffsetFromTop = buttonDistanceFromTop + buttonHeight;
 
-		window.scrollTo({ top: scrollOffsetFromTop, behavior: "smooth" });
-	}
+    window.scrollTo({ top: scrollOffsetFromTop, behavior: 'smooth' });
+  }
   return (
     <>
       <Head>
@@ -29,30 +28,36 @@ export default function Layout({ children, image, title, subTitle }: LayoutProps
         <meta name="viewport" content="width=device-width,initial-scale=1" />
       </Head>
       <header className={styles.header}>
+        {image && (
+          <div className={styles.imgContainer}>
+            <Image alt="" src={image} layout="fill" className={styles.backgroundImage} />
+          </div>
+        )}
+        <div className={styles.headerContent}>
 
-        {image && 
-        <div className={styles.imgContainer}>
-        <Image alt="" src={image} layout='fill' />
-        </div>
-        }
-        <div className={styles.container}>
-          <h1>{title}</h1>
-          <p>{subTitle}</p>
+        <div className={styles.topContainer}>
+          <div className={styles.logoContainer}>
+            <Image src="/logo.png" width="272" height="154" alt="Skeivt Kulturår logo" className={styles.logo} />
+          </div>
           <nav aria-label="Main navigation" className={styles.headerNav}>
             <ul>
               <li>
                 <Link href="/">Arrangementer</Link>
               </li>
               <li>
-                <Link href="/submit">Meld inn arrangement</Link>
-              </li>
-              <li>
                 <Link href="/about">Om Skeivt Kulturår</Link>
+              </li>
+              <li className={styles.submitLink}>
+                <Link href="/submit">Meld inn arrangement</Link>
               </li>
             </ul>
           </nav>
         </div>
-        <DownArrow onClick={scrollToContent} ref={scrollButtonRef} />
+        <div className={styles.container}>
+          <h1>{title}</h1>
+          <p>{subTitle}</p>
+        </div>
+        </div>
       </header>
       <main className={styles.main}>{children}</main>
     </>

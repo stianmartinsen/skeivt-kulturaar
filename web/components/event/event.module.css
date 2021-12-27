@@ -20,8 +20,8 @@
   font-size: 32px;
   line-height: 36px;
   text-align: center;
-  background-color: var(--color-purple);
-  color: white;
+  background-color: var(--color-blue);
+  color: var(--color-foreground);
 }
 
 .date span {
@@ -41,7 +41,7 @@
   display: flex;
   flex-direction: column;
   padding: 24px;
-  background-color: var(--color-light-grey);
+  background-color: var(--color-light-beige);
 }
 
 .content time {
@@ -71,6 +71,7 @@
   position: relative;
   width: 400px;
   height: 265px;
+  background-color: var(--color-beige);
 }
 
 .content a:link,
@@ -78,18 +79,34 @@
   margin-right: auto;
 }
 
-.content a.facebook {
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 24px;
+.eventLink:link, .eventLink:visited {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 48px;
+  background-color: var(--color-green);
+  color: var(--color-foreground);
+  border-radius: 50px;
+  text-decoration: none;
+  width: 100%;
 }
 
 .tagList {
   display: flex;
   flex-wrap: wrap;
-  margin: 16px 0 0;
+  margin: 16px 0;
   gap: 8px;
   padding: 0;
+}
+
+.readMore, .readMore:hover, .readMore:focus {
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: var(--color-dark-purple);
+  text-decoration: underline;
+  background-color: transparent;
+  text-align: start;
 }
 
 .tagList__item {
@@ -97,12 +114,11 @@
   display: flex;
   align-items: center;
   padding: 8px 12px;
-  background: var(--color-medium-purple);
-  color: var(--color-purple);
+  background: var(--color-beige);
+  color: var(--color-foreground);
   border-radius: 100px;
   font-weight: bold;
   font-size: 12px;
   line-height: 14px;
   letter-spacing: 1px;
-  text-transform: uppercase;
 }

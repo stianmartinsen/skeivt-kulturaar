@@ -3,18 +3,20 @@
  * quick baseline!
  */
 :root {
-  --color-foreground: #252525;
-  --color-background: hsl(0, 0%, 100%);
-  --color-links: var(--color-purple);
-  --color-links-hover: var(--color-blue);
-
-  --color-purple: #3a1b7b;
-  --color-medium-purple: #C5B6D5;
-  --color-light-purple: #ebe7f1;
-  --color-blue: #184fbd;
-  --color-grey: #656781;
-  --color-base-grey: #ECEEF4;
-  --color-light-grey: #F7F8FA;
+  --color-purple: #BE69FF;
+  --color-dark-purple: #8142B0;
+  --color-blue: #82C8F5;
+  --color-green: #3CD28C;
+  --color-yellow: #FFD250;
+  --color-red: #FF695F;
+  --color-black: #1E1E1E;
+  --color-grey: #5B5B5B;
+  --color-beige: #EDEDE5;
+  --color-light-beige: #F6F6F0;
+  --color-cream: #FFFFF5;
+  --color-foreground: var(--color-black);
+  --color-foreground-light: var(--color-cream);
+  --color-background: var(--color-cream);
   --font-body: proxima-nova, -apple-system, 'Segoe UI', Helvetica Neue, Helvetica, Roboto, Arial, sans-serif, system-ui,
     'Apple Color Emoji', 'Segoe UI Emoji';
 }
@@ -99,6 +101,6 @@ button {
 }
 button:hover,
 button:focus {
-  color: white;
+  color: var(--color-foreground-light);
   background-color: var(--color-purple);
 }
