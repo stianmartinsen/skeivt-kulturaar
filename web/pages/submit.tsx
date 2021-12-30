@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 import { Calendar } from '../components/icons/calendar';
+import { Info } from '../components/icons/info';
 import { Location } from '../components/icons/location';
 import Layout from '../components/layout';
 import sanity, { urlFor } from '../sanity';
@@ -25,7 +26,7 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
         <fieldset>
           <h2>
             <figure>
-              <Calendar />
+              <Info />
             </figure>
             Arrangementinformasjon
           </h2>
@@ -81,16 +82,13 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
         <fieldset>
           <h2>
             <figure>
-              <Calendar />
+              <Info />
             </figure>
             Tillegsinformasjon
           </h2>
-          <p>
-            Ved spørsmål så trenger redaktør kontaktinformasjon til arrangement. Dette vil ikke bli synlig i kalenderen.
-          </p>
           <div>
-            <div>
               <label htmlFor="age-limit">Aldersgrense</label>
+            <div className={styles.checkboxContainer}>
               <input
                 name="age-limit"
                 type="checkbox"
@@ -111,7 +109,7 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
               <label htmlFor="ticket-price">Billettpris</label>
               <input name="ticket-price" placeholder="kr" />
             </div>
-            <div>
+            <div className={styles.checkboxContainer}>
               <input name="ticket-free" type="checkbox" />
               <label htmlFor="ticket-free">Gratis</label>
             </div>
@@ -127,7 +125,7 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
             <div>
               <div className={styles.dropzone} {...getRootProps()}>
                 <input {...getInputProps({ name: 'image' })} />
-
+                <p>+</p>
                 <p>Trykk eller drag &apos;n drop filer her...</p>
               </div>
               <div className={styles.dropzone__info}>
@@ -194,9 +192,11 @@ export type Data = {
   image?: string | null;
   title?: string | null;
   subTitle?: string | null;
-}
+};
 export const getStaticProps: GetStaticProps = async (context) => {
-  const res = await sanity.fetch(`*[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0]`)
+  const res = await sanity.fetch(
+    `*[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0]`
+  );
   const image = urlFor(res?.header?.background).auto('format').url().toString();
   return {
     props: {
@@ -204,7 +204,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
       title: res?.header?.title || null,
       subTitle: res?.header?.subtitle || null,
     },
-    revalidate: 3600
-  }
-}
-
+    revalidate: 3600,
+  };
+};

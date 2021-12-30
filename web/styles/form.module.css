@@ -18,7 +18,7 @@
 .form h2 {
   display: flex;
   align-items: center;
-  color: var(--color-purple);
+  color: var(--color-foreground);
   font-weight: bold;
   font-size: 24px;
   line-height: 30px;
@@ -30,7 +30,7 @@
   align-items: center;
   width: 40px;
   height: 40px;
-  background-color: var(--color-purple);
+  background-color: var(--color-green);
   color: var(--color-foreground-light);
   justify-content: center;
   margin: 0 0.5em 0 0;
@@ -61,6 +61,16 @@
   line-height: 18px;
 }
 
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.checkboxContainer label {
+  margin: 0;
+}
+
 .form input,
 .form textarea {
   display: flex;
@@ -89,7 +99,7 @@
 .form input:active,
 .form textarea:focus,
 .form textarea:active {
-  border-color: var(--color-purple);
+  border-color: var(--color-green);
   outline: none;
 }
 
@@ -103,6 +113,16 @@
   margin-left: 30px;
   font-size: 0.9em;
   font-weight: 400;
+}
+
+.dropzone p:first-of-type {
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+
+.dropzone p {
+  text-align: center;
+  font-weight: 500;
 }
 
 .form textarea {
