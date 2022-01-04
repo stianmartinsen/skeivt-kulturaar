@@ -12,20 +12,12 @@ export type LayoutProps = {
   subTitle?: string | null;
 };
 export default function Layout({ children, image, title, subTitle }: LayoutProps) {
-  const scrollButtonRef = useRef<HTMLButtonElement>(null);
-
-  function scrollToContent() {
-    const buttonDistanceFromTop = scrollButtonRef.current?.offsetTop as number;
-    const buttonHeight = scrollButtonRef.current?.offsetHeight as number;
-    const scrollOffsetFromTop = buttonDistanceFromTop + buttonHeight;
-
-    window.scrollTo({ top: scrollOffsetFromTop, behavior: 'smooth' });
-  }
   return (
     <>
       <Head>
         <title>Skeivt Kulturår</title>
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link rel="shortcut icon" href="/favicon.png" />
       </Head>
       <header className={styles.header}>
         {image && (
@@ -34,29 +26,28 @@ export default function Layout({ children, image, title, subTitle }: LayoutProps
           </div>
         )}
         <div className={styles.headerContent}>
-
-        <div className={styles.topContainer}>
-          <div className={styles.logoContainer}>
-            <Image src="/logo.png" width="272" height="154" alt="Skeivt Kulturår logo" className={styles.logo} />
+          <div className={styles.topContainer}>
+            <div className={styles.logoContainer}>
+              <Image src="/logo.png" width="272" height="154" alt="Skeivt Kulturår logo" className={styles.logo} />
+            </div>
+            <nav aria-label="Main navigation" className={styles.headerNav}>
+              <ul>
+                <li>
+                  <Link href="/">Arrangementer</Link>
+                </li>
+                <li>
+                  <Link href="/about">Om Skeivt Kulturår</Link>
+                </li>
+                <li className={styles.submitLink}>
+                  <Link href="/submit">Meld inn arrangement</Link>
+                </li>
+              </ul>
+            </nav>
           </div>
-          <nav aria-label="Main navigation" className={styles.headerNav}>
-            <ul>
-              <li>
-                <Link href="/">Arrangementer</Link>
-              </li>
-              <li>
-                <Link href="/about">Om Skeivt Kulturår</Link>
-              </li>
-              <li className={styles.submitLink}>
-                <Link href="/submit">Meld inn arrangement</Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <div className={styles.container}>
-          <h1>{title}</h1>
-          <p>{subTitle}</p>
-        </div>
+          <div className={styles.container}>
+            <h1>{title}</h1>
+            <p>{subTitle}</p>
+          </div>
         </div>
       </header>
       <main className={styles.main}>{children}</main>

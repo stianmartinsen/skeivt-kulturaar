@@ -1,6 +1,7 @@
 import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import Multiselect from 'multiselect-react-dropdown';
 
 import { Calendar } from '../components/icons/calendar';
 import { Info } from '../components/icons/info';
@@ -10,8 +11,25 @@ import sanity, { urlFor } from '../sanity';
 
 import styles from '../styles/form.module.css';
 
+const COUNTIES = [
+  'Oslo',
+  'Viken',
+  'Rogaland',
+  'Møre og Romsdal',
+  'Nordland',
+  'Innlandet',
+  'Vestfold og Telemark',
+  'Agder',
+  'Vestland',
+  'Trøndelag',
+  'Troms og Finnmark',
+] as const;
+
 export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [ageLimit, setAgelimit] = useState(false);
+  const [isPhysical, setIsPhysical] = useState(true);
+  const [isDigital, setIsDigital] = useState(false);
+  const [county, setCounty] = useState<typeof COUNTIES[number]>();
 
   const { getRootProps, getInputProps } = useDropzone({
     maxSize: 5000000,
@@ -82,12 +100,52 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
         <fieldset>
           <h2>
             <figure>
+              <Location />
+            </figure>
+            Velg sted
+          </h2>
+          <div className={styles.layout}>
+            <div className={`${styles.checkboxContainer} ${styles.gridSpan}`}>
+              <input
+                name="physical"
+                type="checkbox"
+                checked={isPhysical}
+                onChange={(e) => setIsPhysical(e.target.checked)}
+              />
+              <label htmlFor="physical">Fysisk</label>
+              <input
+                name="digital"
+                type="checkbox"
+                checked={isDigital}
+                onChange={(e) => setIsDigital(e.target.checked)}
+              />
+              <label htmlFor="digital">Digitalt</label>
+            </div>
+            <div>
+              <label htmlFor="address" aria-required={isPhysical}>
+                Addresse
+              </label>
+              <input name="address" required={isPhysical} />
+            </div>
+            <div>
+              <label htmlFor="postalNumber">Postnummer</label>
+              <input name="postalNumber" />
+            </div>
+          </div>
+          <div className={styles.gridSpan}>
+            <label htmlFor="county">Fylke</label>
+            <Multiselect options={COUNTIES} placeholder="Velg fylke" singleSelect isObject={false} selectedValues={county} onSelect={(item) => setCounty(item)} />
+          </div>
+        </fieldset>
+        <fieldset>
+          <h2>
+            <figure>
               <Info />
             </figure>
             Tillegsinformasjon
           </h2>
           <div>
-              <label htmlFor="age-limit">Aldersgrense</label>
+            <label htmlFor="age-limit">Aldersgrense</label>
             <div className={styles.checkboxContainer}>
               <input
                 name="age-limit"
@@ -183,6 +241,9 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
         <p>
           <button>Send inn arrangement</button>
         </p>
+        <input type="text" name="password" className={styles.form_hp} tabIndex={-1} autoComplete="off" />
+        <input type="text" name="username" className={styles.form_hp} tabIndex={-1} autoComplete="off" />
+        <input type="text" name="withdraw_amount" className={styles.form_hp} tabIndex={-1} autoComplete="off" />
       </form>
     </Layout>
   );

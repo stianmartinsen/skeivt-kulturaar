@@ -27,7 +27,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }`
   const res = await sanity.fetch(query)
   const image = urlFor(res?.configuration?.header?.background).auto('format').url().toString();
-  console.log(JSON.stringify(res, null, 2))
 
   return {
     props: {

@@ -7609,6 +7609,11 @@ multiparty@^4.2.2:
     safe-buffer "5.2.1"
     uid-safe "2.1.5"
 
+multiselect-react-dropdown@^2.0.17:
+  version "2.0.17"
+  resolved "https://registry.yarnpkg.com/multiselect-react-dropdown/-/multiselect-react-dropdown-2.0.17.tgz#f7455a3cb45dc14a7eaddfc563a39276e116bcd4"
+  integrity sha512-NB1RNY3lhcNDEaHRkoYfqD6t9+sdYe82bNFzpAGqUl4fquon/jKvtADImlP4enI6PNL+a7iHxNCbcrlY9WiLVw==
+
 murmurhash@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/murmurhash/-/murmurhash-2.0.0.tgz#556779daf7c39a0d2a3f5a9d080d84bf4833f9ee"
