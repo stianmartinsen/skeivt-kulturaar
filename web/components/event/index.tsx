@@ -49,7 +49,9 @@ export function Event({ date, eventLink, eventName, imgUrl, organizer, address, 
         </a>
         <Disclosure open={isOpen} onChange={() => setIsOpen((prev) => !prev)}>
           <DisclosurePanel>Event information</DisclosurePanel>
-          <DisclosureButton className={styles.readMore}>{isOpen ? 'Les mindre' : 'Les mer om arrangementet'}</DisclosureButton>
+          <DisclosureButton className={styles.readMore}>
+            {isOpen ? 'Les mindre' : 'Les mer om arrangementet'}
+          </DisclosureButton>
         </Disclosure>
       </div>
     </div>

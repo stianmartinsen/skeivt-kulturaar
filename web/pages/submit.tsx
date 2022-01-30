@@ -1,35 +1,31 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
-import { useState } from "react";
-import { useDropzone } from "react-dropzone";
-import Multiselect from "multiselect-react-dropdown";
+import type { GetStaticProps, InferGetStaticPropsType } from 'next';
+import { useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import Multiselect from 'multiselect-react-dropdown';
 
-import { Calendar } from "../components/icons/calendar";
-import { Info } from "../components/icons/info";
-import { Location } from "../components/icons/location";
-import Layout from "../components/layout";
-import sanity, { urlFor } from "../sanity";
+import { Calendar } from '../components/icons/calendar';
+import { Info } from '../components/icons/info';
+import { Location } from '../components/icons/location';
+import Layout from '../components/layout';
+import sanity, { urlFor } from '../sanity';
 
-import styles from "../styles/form.module.css";
+import styles from '../styles/form.module.css';
 
 const COUNTIES = [
-  "Oslo",
-  "Viken",
-  "Rogaland",
-  "Møre og Romsdal",
-  "Nordland",
-  "Innlandet",
-  "Vestfold og Telemark",
-  "Agder",
-  "Vestland",
-  "Trøndelag",
-  "Troms og Finnmark",
+  'Oslo',
+  'Viken',
+  'Rogaland',
+  'Møre og Romsdal',
+  'Nordland',
+  'Innlandet',
+  'Vestfold og Telemark',
+  'Agder',
+  'Vestland',
+  'Trøndelag',
+  'Troms og Finnmark',
 ] as const;
 
-export default function SubmitEvent({
-  image,
-  title,
-  subTitle,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [ageLimit, setAgelimit] = useState(false);
   const [isPhysical, setIsPhysical] = useState(true);
   const [isDigital, setIsDigital] = useState(false);
@@ -37,7 +33,7 @@ export default function SubmitEvent({
 
   const { getRootProps, getInputProps } = useDropzone({
     maxSize: 5000000,
-    accept: ".jpg,.png,.jpeg",
+    accept: '.jpg,.png,.jpeg',
   });
 
   return (
@@ -51,14 +47,14 @@ export default function SubmitEvent({
           const target = e.target as HTMLFormElement;
           try {
             const formData = new FormData(target);
-            formData.append("county", county && county[0] ? county[0] : "");
+            formData.append('county', county && county[0] ? county[0] : '');
 
-            fetch("/api/submit", {
-              method: "POST",
+            fetch('/api/submit', {
+              method: 'POST',
               body: formData,
             });
           } catch (err) {
-            console.log("Error:", err);
+            console.log('Error:', err);
           }
         }}
       >
@@ -81,14 +77,8 @@ export default function SubmitEvent({
           <input name="organizer-name" required placeholder="Arrangørnavn" />
 
           <label htmlFor="event-link">Lenke til arrangementet</label>
-          <input
-            name="event-link"
-            placeholder="URL"
-            aria-describedby="event-link-help-text"
-          />
-          <small id="event-link-help-text">
-            Lenke til Facebook arrangement f.eks.
-          </small>
+          <input name="event-link" placeholder="URL" aria-describedby="event-link-help-text" />
+          <small id="event-link-help-text">Lenke til Facebook arrangement f.eks.</small>
         </fieldset>
         <fieldset>
           <h3>
@@ -150,14 +140,8 @@ export default function SubmitEvent({
             </div>
             {isDigital && (
               <div>
-                <label htmlFor="digital-event-link">
-                  Lenke til digital event
-                </label>
-                <input
-                  name="digital-event-link"
-                  placeholder="URL"
-                  aria-describedby="digital-event-link"
-                />
+                <label htmlFor="digital-event-link">Lenke til digital event</label>
+                <input name="digital-event-link" placeholder="URL" aria-describedby="digital-event-link" />
               </div>
             )}
             {isPhysical && (
@@ -204,7 +188,7 @@ export default function SubmitEvent({
                 type="checkbox"
                 checked={ageLimit}
                 onChange={() => setAgelimit((prev) => !prev)}
-              />{" "}
+              />{' '}
               Ja
             </div>
             {ageLimit && (
@@ -212,12 +196,7 @@ export default function SubmitEvent({
                 <label htmlFor="age-limit-age" aria-required={ageLimit}>
                   Spesifiser alder
                 </label>
-                <input
-                  name="age-limit-age"
-                  placeholder="18"
-                  type="number"
-                  required={ageLimit}
-                />
+                <input name="age-limit-age" placeholder="18" type="number" required={ageLimit} />
               </div>
             )}
             <div>
@@ -229,9 +208,7 @@ export default function SubmitEvent({
               <label htmlFor="ticket-free">Gratis</label>
             </div>
             <div>
-              <label htmlFor="ticket-purchase-link">
-                Eventuell lenke til billettkjøp:
-              </label>
+              <label htmlFor="ticket-purchase-link">Eventuell lenke til billettkjøp:</label>
               <input name="ticket-purchase-link" placeholder="URL" />
             </div>
             <div>
@@ -241,7 +218,7 @@ export default function SubmitEvent({
             <label htmlFor="image">Last opp bilde</label>
             <div>
               <div className={styles.dropzone} {...getRootProps()}>
-                <input type="file" {...getInputProps({ name: "image" })} />
+                <input type="file" {...getInputProps({ name: 'image' })} />
                 <p>+</p>
                 <p>Trykk eller drag &apos;n drop filer her...</p>
               </div>
@@ -264,8 +241,7 @@ export default function SubmitEvent({
             Kontaktperson
           </h3>
           <p>
-            Ved spørsmål så trenger redaktør kontaktinformasjon til arrangement.
-            Dette vil ikke bli synlig i kalenderen.
+            Ved spørsmål så trenger redaktør kontaktinformasjon til arrangement. Dette vil ikke bli synlig i kalenderen.
           </p>
           <div className={styles.layout}>
             <div>
@@ -290,43 +266,20 @@ export default function SubmitEvent({
             </div>
             <div className={styles.gridSpan}>
               <label htmlFor="contact-info">Informasjon til redaktør</label>
-              <textarea
-                name="contact-info"
-                placeholder="Informasjon til redaktør"
-              />
+              <textarea name="contact-info" placeholder="Informasjon til redaktør" />
             </div>
           </div>
         </fieldset>
         <fieldset>
-          <label htmlFor="agree">
-            Jeg samtykker til at min persondata blir lagret
-          </label>
+          <label htmlFor="agree">Jeg samtykker til at min persondata blir lagret</label>
           <input type="checkbox" name="agree" />
         </fieldset>
         <p>
           <button>Send inn arrangement</button>
         </p>
-        <input
-          type="text"
-          name="password"
-          className={styles.form_hp}
-          tabIndex={-1}
-          autoComplete="off"
-        />
-        <input
-          type="text"
-          name="username"
-          className={styles.form_hp}
-          tabIndex={-1}
-          autoComplete="off"
-        />
-        <input
-          type="text"
-          name="withdraw_amount"
-          className={styles.form_hp}
-          tabIndex={-1}
-          autoComplete="off"
-        />
+        <input type="text" name="password" className={styles.form_hp} tabIndex={-1} autoComplete="off" />
+        <input type="text" name="username" className={styles.form_hp} tabIndex={-1} autoComplete="off" />
+        <input type="text" name="withdraw_amount" className={styles.form_hp} tabIndex={-1} autoComplete="off" />
       </form>
     </Layout>
   );
@@ -337,11 +290,11 @@ export type Data = {
   title?: string | null;
   subTitle?: string | null;
 };
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async () => {
   const res = await sanity.fetch(
     `*[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0]`
   );
-  const image = urlFor(res?.header?.background).auto("format").url().toString();
+  const image = urlFor(res?.header?.background).auto('format').url().toString();
   return {
     props: {
       image: image || null,
