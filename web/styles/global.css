@@ -61,7 +61,7 @@ body {
 
 body,
 input,
-textarea {
+textarea, .mantine-NativeSelect-input {
   font-family: var(--font-body);
 }
 
@@ -101,6 +101,11 @@ button {
 }
 button:hover,
 button:focus {
+}
+
+/* Prevent dropdowns from having weird styling because of its internal input element */
+input.searchBox:disabled {
+  display: none
 }
 
 /* Position and sizing of burger button */
