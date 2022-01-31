@@ -1,56 +1,76 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import styles from './event.module.css';
 import { useState } from 'react';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@reach/disclosure';
+import { format } from 'date-fns';
+import nb from 'date-fns/locale/nb';
+
+const MONTHS = ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
 
 export type EventProps = {
-  date: string;
+  startDate: string;
+  endDate: string;
   eventName: string;
   imgUrl?: string;
   organizer: string;
-  address: string;
-  eventLink: string;
-  facebookLink?: string;
+  address?: string;
+  eventLink?: string;
   tags: Array<string>;
+  info?: string;
+  county?: string;
 };
-export function Event({ date, eventLink, eventName, imgUrl, organizer, address, facebookLink, tags }: EventProps) {
+export function Event({
+  startDate: providedStartDate,
+  endDate: providedEndDate,
+  eventLink,
+  eventName,
+  imgUrl,
+  organizer,
+  address,
+  tags,
+  info,
+  county,
+}: EventProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const startDate = new Date(providedStartDate);
+  const endDate = new Date(providedEndDate);
+  const imageCoverMonth = MONTHS[startDate.getMonth()];
+  const date = startDate.getDate();
+  const startDateFormatted = format(startDate, 'EEEE kk.mm', { locale: nb });
+  const endDateFormatted = format(endDate, 'kk.mm', { locale: nb });
   return (
     <div className={styles.event}>
       <div className={styles.imgContainer}>
-        <time className={styles.date}>
-          21<span>nov</span>
+        <time className={imgUrl ? styles.imgDate : styles.date}>
+          {date}
+          <span>{imageCoverMonth}</span>
         </time>
         {imgUrl && <Image className={styles.img} src={imgUrl} alt={`Event ${''}`} layout="fill" />}
       </div>
       <div className={styles.content}>
-        <time>time</time>
-        <h3>Event name</h3>
-        <p>
-          Arrangør -{' '}
-          <a href="https://google.com" target={`_gm_${eventName || 'blank'}`} rel="noreferrer">
-            Google maps link
-          </a>
-        </p>
+        <span>
+          <time>{startDateFormatted}</time>
+          {' - '}
+          <time>{endDateFormatted}</time>
+        </span>
+        <h3>{eventName}</h3>
+        <p>{address && `${address}, ${county}`}</p>
         <ul className={styles.tagList}>
-          <li className={styles.tagList__item}>Tag</li>
-          <li className={styles.tagList__item}>Tag</li>
-          <li className={styles.tagList__item}>Tag</li>
-          <li className={styles.tagList__item}>Tag</li>
+          {tags.map((tag) => (
+            <li key={tag} className={styles.tagList__item}>
+              {tag}
+            </li>
+          ))}
         </ul>
-        <a
-          href="https://facebook.com"
-          className={styles.eventLink}
-          target={`_fb_${eventName || 'blank'}`}
-          rel="noreferrer"
-        >
-          Facebook link
-        </a>
+        {eventLink && (
+          <a href={eventLink} className={styles.eventLink} target={`_${eventName || 'blank'}`} rel="noreferrer">
+            Gå til arrangement
+          </a>
+        )}
         <Disclosure open={isOpen} onChange={() => setIsOpen((prev) => !prev)}>
-          <DisclosurePanel>Event information</DisclosurePanel>
+          <DisclosurePanel className={styles.info}>{info}</DisclosurePanel>
           <DisclosureButton className={styles.readMore}>
-            {isOpen ? 'Les mindre' : 'Les mer om arrangementet'}
+            {isOpen ? 'Les mindre' : 'Les mer om arrangementet +'}
           </DisclosureButton>
         </Disclosure>
       </div>
