@@ -69,34 +69,20 @@ handler.post(async (req: any, res: NextApiResponse) => {
       sanityEvent['digitalEventUrl'] = req.body['digital-event-link'][0];
     }
 
-    const eventDocument = await sanity.create({
-      _type: 'eventRequest',
-      ...sanityEvent,
-    });
-
-    console.log('Response:', eventDocument);
-    const documentId = eventDocument['_id'];
-    if (req.files.image && req.files.image[0] && req.files['image'][0].size > 0 && documentId) {
+    if (req.files.image && req.files.image[0] && req.files['image'][0].size > 0) {
       const fileStream = createReadStream(req.files.image[0].path);
       const imgAsset = await sanity.assets.upload('image', fileStream as any, {
         contentType: req.files.image[0].headers['content-type'],
         filename: req.files.image[0].originalFilename,
       });
 
-      console.log('The image was uploaded!', imgAsset);
-      await sanity
-        .patch(documentId)
-        .set({
-          image: {
-            _type: 'image',
-            asset: {
-              _type: 'reference',
-              _ref: imgAsset._id,
-            },
-          },
-        })
-        .commit();
+      sanityEvent['image'] = imgAsset;
     }
+
+    await sanity.create({
+      _type: 'eventRequest',
+      ...sanityEvent,
+    });
   } catch (err) {
     console.log('Error:', err);
     res.status(500).send({ error: 'failed to fetch data' });
