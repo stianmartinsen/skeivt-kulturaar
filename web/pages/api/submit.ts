@@ -71,18 +71,23 @@ handler.post(async (req: any, res: NextApiResponse) => {
 
     if (req.files.image && req.files.image[0] && req.files['image'][0].size > 0) {
       const fileStream = createReadStream(req.files.image[0].path);
-      const imgAsset = await sanity.assets.upload('image', fileStream as any, {
-        contentType: req.files.image[0].headers['content-type'],
-        filename: req.files.image[0].originalFilename,
-      });
+      const imgAsset = await sanity.assets
+        .upload('image', fileStream as any, {
+          filename: req.files.image[0].originalFilename,
+        })
+        .catch((err) => {
+          console.log('Error:', err);
+        });
 
-      sanityEvent['image'] = {
-        _type: 'image',
-        asset: {
-          _type: 'reference',
-          _ref: imgAsset._id,
-        },
-      };
+      if (imgAsset) {
+        sanityEvent['image'] = {
+          _type: 'image',
+          asset: {
+            _type: 'reference',
+            _ref: imgAsset._id,
+          },
+        };
+      }
     }
 
     await sanity.create({
