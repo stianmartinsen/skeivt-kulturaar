@@ -76,7 +76,13 @@ handler.post(async (req: any, res: NextApiResponse) => {
         filename: req.files.image[0].originalFilename,
       });
 
-      sanityEvent['image'] = imgAsset;
+      sanityEvent['image'] = {
+        _type: 'image',
+        asset: {
+          _type: 'reference',
+          _ref: imgAsset._id,
+        },
+      };
     }
 
     await sanity.create({

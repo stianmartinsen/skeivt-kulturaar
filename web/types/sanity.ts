@@ -1,5 +1,3 @@
-import { SanityImageAssetDocument } from '@sanity/client';
-
 export type SanityEvent = {
   eventName: string;
   eventDescription: string;
@@ -20,7 +18,7 @@ export type SanityEvent = {
   contactEmail: string;
   additionalInfo: string;
   eventDates: { _key: string; eventStart: string; eventEnd: string }[];
-  image?: SanityImageAssetDocument;
+  image?: { _type: 'image'; asset: { _type: 'reference'; _ref: string } };
 };
 
 export type PublicSanityEvent = Omit<
