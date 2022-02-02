@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { readFileSync } from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -94,16 +94,17 @@ handler.post(async (req: any, res: NextApiResponse) => {
       _type: 'eventRequest',
       ...sanityEvent,
     });
+    res.status(201).json({});
   } catch (err) {
     console.log('Error:', err);
     res.status(500).send({ error: 'failed to fetch data' });
   }
-  res.status(201).json({});
 });
 
 export const config = {
   api: {
     bodyParser: false,
+    externalResolver: true,
   },
 };
 
