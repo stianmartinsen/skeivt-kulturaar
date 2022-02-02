@@ -8,7 +8,12 @@ import nextConnect from 'next-connect';
 import sanity from '../../sanity';
 import { SanityEvent } from '../../types/sanity';
 
-const handler = nextConnect();
+const handler = nextConnect({
+  onError: (err, req, res: NextApiResponse, next) => {
+    console.error(err.stack);
+    res.status(500).end('Something broke!');
+  },
+});
 handler.use(middleware);
 
 handler.post(async (req: any, res: NextApiResponse) => {
