@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiResponse } from 'next';
-import { createReadStream } from 'fs';
+import { readFileSync } from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 
 import middleware from '../../middleware/middleware';
@@ -70,9 +70,9 @@ handler.post(async (req: any, res: NextApiResponse) => {
     }
 
     if (req.files.image && req.files.image[0] && req.files['image'][0].size > 0) {
-      const fileStream = createReadStream(req.files.image[0].path);
+      const file = readFileSync(req.files.image[0].path);
       const imgAsset = await sanity.assets
-        .upload('image', fileStream as any, {
+        .upload('image', file, {
           filename: req.files.image[0].originalFilename,
         })
         .catch((err) => {
